@@ -16,3 +16,24 @@ const txt    = document.querySelector('.result form')
         imgTag.src   = `https://flagcdn.com/48x36/${Country_List[code].toLowerCase()}.png`;
     })
 })
+
+async function getExchangeRate() {
+    
+}
+
+window.addEventListener('load', getExchangeRate);
+getBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    getExchangeRate();
+})
+
+exIcon.addEventListener("click", () => {
+    [fromCur.value, toCur.value] = [toCur.value, fromCur.value];
+    [fromCur, toCur].forEach((select) => {
+        const code = select.value;
+        const imgTag = select.parentElement.querySelector("img");
+        imgTag.src = `https://flagcdn.com/48x36/${Country_List[code].toLowerCase()}.png`;
+    })
+
+    getExchangeRate();
+})
