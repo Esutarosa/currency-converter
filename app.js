@@ -38,4 +38,20 @@ exIcon.addEventListener("click", () => {
     getExchangeRate();
 })
 
-fetch(`https://api.exchangerate-api.com/v4/latest/${fromCurrency}`)
+// second 
+function convertCurrency() {
+    const amount = parseFloat(document.getElementById('amount').value);
+    const fromCurrency = document.getElementById('fromCurrency').value;
+    const toCurrency = document.getElementById('toCurrency').value;
+
+    fetch(`https://api.exchangerate-api.com/v4/latest/${fromCurrency}`)
+        .then(response => response.json())
+        .then(data => {
+            const exchangeRate = data.rates[toCurrency];
+            const result = (amount * exchangeRate).toFixed(2);
+            document.getElementById('result').textContent = `${amount} ${fromCurrency} = ${result} ${toCurrency}`;
+        })
+        .catch(error => {
+            console.error('Ошибка при получении курсов валют:', error);
+        });
+}
