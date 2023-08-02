@@ -1,2 +1,3 @@
-# currency-converter
+# Currency converter
  
+Simple currency converter
