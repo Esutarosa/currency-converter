@@ -3,6 +3,10 @@ import { Block } from './Block';
 import './index.scss';
 
 function App() {
+  const [rates, setRates] = React.useState({})
+
+  
+
   return (
     <div className="App">
       <Block value={0} currency="UAH" onChangeCurrency={(cur) => console.log(cur)} />
