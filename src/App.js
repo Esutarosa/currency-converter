@@ -5,7 +5,17 @@ import './index.scss';
 function App() {
   const [rates, setRates] = React.useState({})
 
-  
+  React.useEffect(() => {
+    fetch('http://cdn.cur.su/api/latest.json')
+      .then((res) => res.json())
+      .then((json) => {
+        setRates(json.rates)
+        console.log(json.rates);
+      })
+      .catch((err) => {
+        alert('Some error')
+      })
+  }, [])
 
   return (
     <div className="App">
