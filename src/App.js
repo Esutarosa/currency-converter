@@ -6,7 +6,7 @@ function App() {
   const [fromCurrency, setFromCurrency] = React.useState('UAH')
   const [toCurrency, setToCurrency] = React.useState('UAH')
   const [fromPrice, setFromPrice] = React.useState(0)
-  const [toPrice, setToPrice] = React.useState(0)
+  const [toPrice, setToPrice] = React.useState(1)
 
   const [rates, setRates] = React.useState({})
 
@@ -15,27 +15,40 @@ function App() {
       .then((res) => res.json())
       .then((json) => {
         setRates(json.rates)
-        console.log(json.rates);
+        onChangeToPrice(1)
       })
       .catch((err) => {
         alert('Some error ')
       })
   }, [])
 
-  const onChangeFromProice = (value) => {
+  const onChangeFromPrice = (value) => {
+    const price = value / rates[fromCurrency]
+    const result = price * rates[toCurrency]
+    setToPrice(result)
     setFromPrice(value)
   }
 
-  const onChangeToProice = (value) => {
+  const onChangeToPrice = (value) => {
+    const result = (rates[fromCurrency] / rates[toCurrency]) * value
+    setFromPrice(result)
     setToPrice(value)
   }
+
+  React.useEffect(() => {
+    onChangeFromPrice(fromPrice)
+  }, [fromCurrency])
+
+  React.useEffect(() => {
+    onChangeToPrice(toPrice)
+  }, [toCurrency ])
 
   return (
     <div className="App">
       <Block 
         value={fromPrice} 
         currency={fromCurrency} 
-        onChangeCurrency={setFromCurrency} 
+        onChangeCurrency={onChangeFromCurrency} 
         onChangeValue={onChangeFromProice} 
       />
 
